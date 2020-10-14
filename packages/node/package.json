@@ -1,0 +1,31 @@
+{
+  "name": "@amplitude-private/skylab-js-server",
+  "version": "0.1.0",
+  "description": "Javascript Server SDK for Amplitude Skylab",
+  "main": "dist/skylab.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rm -r dist && tsc --noEmit false",
+    "lint": "eslint . --ignore-path ../../.eslintignore",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublish": "yarn build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/amplitude/skylab-js-server.git",
+    "directory": "packages/browser"
+  },
+  "author": "Amplitude",
+  "license": "MIT",
+  "private": false,
+  "publishConfig": {
+    "registry": "https://amplitude-358203115967.d.codeartifact.us-west-2.amazonaws.com/npm/amplitude-npm-private/",
+    "access": "restricted"
+  },
+  "bugs": {
+    "url": "https://github.com/amplitude/skylab-js-server/issues"
+  },
+  "homepage": "https://github.com/amplitude/skylab-js-server#readme"
+}
