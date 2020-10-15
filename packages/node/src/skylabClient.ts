@@ -3,7 +3,7 @@ import { performance } from 'perf_hooks';
 import { SkylabConfig, Defaults } from './config';
 import { Storage } from './storage/interface';
 import { InMemoryStorage } from './storage/memory';
-import { HttpClient, SimpleResponse } from './transport/interface';
+import { HttpClient } from './transport/interface';
 import { SkylabUser } from './user';
 import { urlSafeBase64Encode } from './util/base64';
 
