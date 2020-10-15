@@ -13,10 +13,11 @@ type HomeProps = {
 // This gets called on every request
 export const getServerSideProps: GetServerSideProps = async () => {
   // Fetch data from external API
-  const showFeature =
-    (await Skylab.getInstance().getAllVariants({ id: 'userId' }))[
-      'js-ssr-demo'
-    ] || false;
+  const allFeatures = await Skylab.getInstance().getAllVariants({
+    id: 'userId',
+  });
+
+  const showFeature = allFeatures['js-ssr-demo'] || false;
 
   // Pass data to the page via props
   return { props: { showFeature } };
@@ -32,9 +33,10 @@ const Home = (props: HomeProps): ReactNode => {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>SSR demo for Skylab</h1>
-
-        <Link href="/client-link">Client side navigation demo</Link>
+        <h1 className={styles.title}>
+          SSR client side navigation demo for Skylab
+        </h1>
+        <Link href="/">Back to index</Link>
         <p className={styles.description}>
           If you see an image below, the feature flag is enabled
         </p>

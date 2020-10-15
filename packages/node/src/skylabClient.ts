@@ -3,7 +3,7 @@ import { performance } from 'perf_hooks';
 import { SkylabConfig, Defaults } from './config';
 import { Storage } from './storage/interface';
 import { InMemoryStorage } from './storage/memory';
-import { HttpClient } from './transport/interface';
+import { HttpClient, SimpleResponse } from './transport/interface';
 import { SkylabUser } from './user';
 import { urlSafeBase64Encode } from './util/base64';
 
@@ -32,47 +32,34 @@ export class SkylabClient {
     this.storage = new InMemoryStorage();
   }
 
-  protected async fetchAll(): Promise<SkylabClient> {
-    if (this.apiKey === null) {
-      return this;
+  public async getAllVariants(
+    user: SkylabUser,
+  ): Promise<{ [flagKey: string]: string }> {
+    if (!this.apiKey) {
+      return {};
     }
     try {
-      const user = this.user;
-      const userContext = {
-        ...user,
-      };
+      const start = performance.now();
+      const userContext = user || {};
       const encodedContext = urlSafeBase64Encode(JSON.stringify(userContext));
       const response = await this.httpClient.request(
         `${this.serverUrl}/sdk/variants/${encodedContext}`,
         'GET',
         { Authorization: `Api-Key ${this.apiKey}` },
       );
+      const json = JSON.parse(response.body);
       this.storage.clear();
-      for (const flag of Object.keys(response)) {
+      for (const flag of Object.keys(json)) {
         this.storage.put(flag, response[flag]);
       }
+      const end = performance.now();
+      console.debug(
+        `[Skylab] Fetched all variants in ${(end - start).toFixed(3)} ms`,
+      );
+      return json;
     } catch (e) {
       console.error(e);
     }
-    return this;
-  }
-
-  public async getVariant(
-    flagKey: string,
-    fallback: string = Defaults.FALLBACK_VARIANT,
-  ): Promise<string> {
-    if (this.apiKey === null) {
-      return null;
-    }
-    const start = performance.now();
-    await this.fetchAll();
-    const variant = this.storage.get(flagKey) || fallback;
-    const end = performance.now();
-    console.debug(
-      `[Skylab] Fetched ${variant} for ${flagKey} in ${(end - start).toFixed(
-        3,
-      )} ms`,
-    );
-    return variant;
+    return {};
   }
 }

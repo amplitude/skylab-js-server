@@ -8,8 +8,11 @@ export type SkylabUser = {
   region?: string;
   language?: string;
   platform?: string;
-  user_properties?: Record<
-    string,
-    string | number | boolean | Array<string | number | boolean>
-  >;
+  user_properties?: {
+    [propertyName: string]:
+      | string
+      | number
+      | boolean
+      | Array<string | number | boolean>;
+  };
 };

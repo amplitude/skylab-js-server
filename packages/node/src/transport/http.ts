@@ -3,14 +3,14 @@ import https from 'https';
 import querystring, { ParsedUrlQueryInput } from 'querystring';
 import url from 'url';
 
-import { HttpClient } from './interface';
+import { SimpleResponse, HttpClient } from './interface';
 
 const request: HttpClient['request'] = (
   requestUrl: string,
   method: string,
   headers: Record<string, string>,
   data?: Record<string, string>,
-): Promise<Response> => {
+): Promise<SimpleResponse> => {
   const urlParams = url.parse(requestUrl);
   if (method === 'GET' && data) {
     urlParams.path = `${urlParams.path}?${querystring.encode(
@@ -34,7 +34,10 @@ const request: HttpClient['request'] = (
       });
 
       res.on('end', () => {
-        resolve(JSON.parse(responseBody));
+        resolve({
+          status: res.statusCode,
+          body: responseBody,
+        });
       });
     });
 

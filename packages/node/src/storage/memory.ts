@@ -1,7 +1,7 @@
 import { Storage } from './interface';
 
 export class InMemoryStorage implements Storage {
-  protected map: Record<string, string> = {};
+  protected map: { [flagKey: string]: string } = {};
 
   put(key: string, value: string): string {
     const oldValue: string = this.get(key);
@@ -19,7 +19,7 @@ export class InMemoryStorage implements Storage {
     this.map = {};
   }
 
-  getAll(): Record<string, string> {
+  getAll(): { [flagKey: string]: string } {
     return this.map;
   }
 
