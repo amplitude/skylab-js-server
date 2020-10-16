@@ -3,7 +3,7 @@ import https from 'https';
 import querystring, { ParsedUrlQueryInput } from 'querystring';
 import url from 'url';
 
-import { SimpleResponse, HttpClient } from './interface';
+import { SimpleResponse, HttpClient } from '../types/transport';
 
 const request: HttpClient['request'] = (
   requestUrl: string,
@@ -49,6 +49,6 @@ const request: HttpClient['request'] = (
   });
 };
 
-export const fetchHttpClient: HttpClient = {
+export const FetchHttpClient: HttpClient = {
   request,
 };

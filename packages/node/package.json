@@ -7,7 +7,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "rm -r dist && tsc --noEmit false",
+    "build": "rm -rf dist && tsc --noEmit false",
     "lint": "eslint . --ignore-path ../../.eslintignore",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepublish": "yarn build"

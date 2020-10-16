@@ -1,6 +1,7 @@
 export type SkylabConfig = {
   instanceName?: string;
   serverUrl?: string;
+  debug?: boolean;
 };
 
 export const Defaults = {

@@ -1,4 +1,4 @@
-import { Storage } from './interface';
+import { Storage } from '../types/storage';
 
 export class InMemoryStorage implements Storage {
   protected map: { [flagKey: string]: string } = {};
