@@ -1,30 +1,12 @@
-import { Skylab } from '@amplitude-private/skylab-js-server';
-import { GetServerSideProps } from 'next';
+import { Skylab } from '@amplitude-private/skylab-js-client';
 import Head from 'next/head';
 import Link from 'next/link';
 import { ReactNode } from 'react';
 
 import styles from '../styles/Home.module.css';
 
-type HomeProps = {
-  showFeature: boolean;
-};
-
-// This gets called on every request
-export const getServerSideProps: GetServerSideProps = async () => {
-  // Fetch data from external API
-  const allFeatures = await Skylab.getInstance().getAllVariants({
-    id: 'userId',
-  });
-
-  const showFeature = allFeatures['js-ssr-demo'] || false;
-
-  // Pass data to the page via props
-  return { props: { showFeature } };
-};
-
-const Home = (props: HomeProps): ReactNode => {
-  const { showFeature } = props;
+const Home = (): ReactNode => {
+  const showFeature = Skylab.getInstance().getVariant('js-ssr-demo');
   return (
     <div className={styles.container}>
       <Head>

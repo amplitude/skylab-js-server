@@ -21,7 +21,7 @@ const init = (apiKey?: string, config?: SkylabConfig): SkylabClient => {
 };
 
 const getInstance = (name: string = Defaults.INSTANCE_NAME): SkylabClient => {
-  const normalizedName = normalizeInstanceName(name);
+  const normalizedName = normalizeInstanceName(name) || Defaults.INSTANCE_NAME;
   return instances[normalizedName];
 };
 
