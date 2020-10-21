@@ -1,23 +1,40 @@
-import { Skylab } from '@amplitude-private/skylab-js-client';
+import { SkylabClient } from '@amplitude-private/skylab-js-client';
 import { AppProps } from 'next/app';
 import { ReactNode } from 'react';
 
+import { SkylabProvider } from '../contexts/skylabContext';
 import { SkylabServer } from '../lib/skylab';
 import '../styles/globals.css';
+
+let skylab;
 
 function MyApp(appProps: AppProps): ReactNode {
   const { Component, pageProps } = appProps;
   console.debug('Rendering');
-  if (appProps['features']) {
+  const isServerSide = typeof window === 'undefined';
+  if (isServerSide) {
     console.debug('Initializing Client Skylab');
-    Skylab.init('client-IAxMYws9vVQESrrK88aTcToyqMxiiJoR', {
+    // on the server, we want to create a new SkylabClient every time
+    skylab = new SkylabClient('client-IAxMYws9vVQESrrK88aTcToyqMxiiJoR', {
       initialFlags: appProps['features'],
-      isServerSide: typeof window === 'undefined',
+      isServerSide,
     });
+  } else {
+    if (!skylab) {
+      // in the client, we only want to create the SkylabClient once
+      skylab = new SkylabClient('client-IAxMYws9vVQESrrK88aTcToyqMxiiJoR', {
+        initialFlags: appProps['features'],
+        isServerSide,
+      });
+    }
   }
   // add Skylab to the global object for debugging
-  globalThis.Skylab = Skylab;
-  return <Component {...pageProps} />;
+  globalThis.Skylab = skylab;
+  return (
+    <SkylabProvider value={skylab}>
+      <Component {...pageProps} />
+    </SkylabProvider>
+  );
 }
 
 MyApp.getInitialProps = async ({ ctx }) => {

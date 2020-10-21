@@ -1,12 +1,13 @@
-import { Skylab } from '@amplitude-private/skylab-js-client';
 import Head from 'next/head';
 import Link from 'next/link';
-import { ReactNode } from 'react';
+import { ReactNode, useContext } from 'react';
 
+import { SkylabContext } from '../contexts/skylabContext';
 import styles from '../styles/Home.module.css';
 
 const Home = (): ReactNode => {
-  const showFeature = Skylab.getInstance().getVariant('js-ssr-demo');
+  const skylab = useContext(SkylabContext);
+  const showFeature = skylab.getVariant('js-ssr-demo');
   return (
     <div className={styles.container}>
       <Head>
@@ -22,17 +23,17 @@ const Home = (): ReactNode => {
         <p className={styles.description}>
           If you see an image below, the feature flag is enabled
         </p>
-
-        {showFeature ? (
-          <footer className={styles.footer}>
-            <img
-              src="/amplitude-logo.svg"
-              alt="Flag enabled!"
-              className={styles.logo}
-            />
-          </footer>
-        ) : null}
       </main>
+
+      {showFeature ? (
+        <footer className={styles.footer}>
+          <img
+            src="/amplitude-logo.svg"
+            alt="Flag enabled!"
+            className={styles.logo}
+          />
+        </footer>
+      ) : null}
     </div>
   );
 };
