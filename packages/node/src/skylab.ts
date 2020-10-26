@@ -18,8 +18,8 @@ const init = (apiKey?: string, config?: SkylabConfig): SkylabClient => {
   return instances[normalizedName];
 };
 
-const getInstance = (name: string): SkylabClient => {
-  const instance = instances[name || Defaults.INSTANCE_NAME];
+const getInstance = (name: string = Defaults.INSTANCE_NAME): SkylabClient => {
+  const instance = instances[name];
   if (!instance) {
     console.warn(
       `[Skylab] Instance ${name} has not been initialized. Call init before calling getInstance.`,
