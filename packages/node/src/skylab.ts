@@ -7,10 +7,10 @@ import { SkylabClient } from './skylabClient';
 
 const instances = {};
 
-const init = (apiKey?: string, config?: SkylabConfig): SkylabClient => {
+const init = (clientApiKey?: string, config?: SkylabConfig): SkylabClient => {
   const normalizedName = config?.instanceName || Defaults.INSTANCE_NAME;
   if (!instances[normalizedName]) {
-    instances[normalizedName] = new SkylabClient(apiKey, {
+    instances[normalizedName] = new SkylabClient(clientApiKey, {
       ...config,
       instanceName: normalizedName,
     });

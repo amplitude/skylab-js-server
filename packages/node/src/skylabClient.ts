@@ -8,7 +8,7 @@ import { urlSafeBase64Encode } from './util/base64';
 import { performance } from './util/performance';
 
 export class SkylabClient {
-  protected readonly apiKey: string;
+  protected readonly clientApiKey: string;
   protected readonly storage: Storage;
   protected readonly httpClient: HttpClient;
 
@@ -17,8 +17,8 @@ export class SkylabClient {
   protected user: SkylabUser;
   protected debug: boolean;
 
-  public constructor(apiKey: string, config: SkylabConfig) {
-    this.apiKey = apiKey;
+  public constructor(clientApiKey: string, config: SkylabConfig) {
+    this.clientApiKey = clientApiKey;
     this.config = config;
     this.serverUrl = config?.serverUrl || Defaults.SERVER_URL;
     this.httpClient = FetchHttpClient;
@@ -29,7 +29,7 @@ export class SkylabClient {
   public async getAllVariants(
     user: SkylabUser,
   ): Promise<{ [flagKey: string]: string }> {
-    if (!this.apiKey) {
+    if (!this.clientApiKey) {
       return {};
     }
     try {
@@ -39,7 +39,7 @@ export class SkylabClient {
       const response = await this.httpClient.request(
         `${this.serverUrl}/sdk/variants/${encodedContext}`,
         'GET',
-        { Authorization: `Api-Key ${this.apiKey}` },
+        { Authorization: `Api-Key ${this.clientApiKey}` },
       );
       const json = JSON.parse(response.body);
       this.storage.clear();
