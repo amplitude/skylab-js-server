@@ -1,10 +1,12 @@
 import { SkylabConfig, Defaults } from './config';
+import { evaluate } from './evaluation/engine';
+import { FlagConfig } from './flagConfig';
 import { InMemoryStorage } from './storage/memory';
 import { FetchHttpClient } from './transport/http';
 import { Storage } from './types/storage';
 import { HttpClient } from './types/transport';
 import { SkylabUser } from './user';
-import { urlSafeBase64Encode } from './util/base64';
+import { urlSafeBase64Encode } from './util/encode';
 import { performance } from './util/performance';
 
 export class SkylabClient {
@@ -24,6 +26,41 @@ export class SkylabClient {
     this.httpClient = FetchHttpClient;
     this.storage = new InMemoryStorage();
     this.debug = config?.debug;
+  }
+
+  private async getRules(): Promise<[FlagConfig]> {
+    if (!this.apiKey) {
+      return [null];
+    }
+    try {
+      const start = performance.now();
+      const response = await this.httpClient.request(
+        `${this.serverUrl}/sdk/rules`,
+        'GET',
+        { Authorization: `Api-Key ${this.apiKey}` },
+      );
+      const json = JSON.parse(response.body);
+      // TODO: Get Flag Configs from this Json Response Body and return them
+
+      const end = performance.now();
+      if (this.debug) {
+        console.debug(
+          `[Skylab] Fetched all rules in ${(end - start).toFixed(3)} ms`,
+        );
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    return [null];
+  }
+
+  public async getVariant(flagKey: string, user: SkylabUser): Promise<string> {
+    const flagConfigs = await this.getRules();
+    const flagVariants = evaluate(flagConfigs, user);
+
+    // TODO: put this into storage and then return
+
+    return flagVariants[flagKey];
   }
 
   public async getAllVariants(
