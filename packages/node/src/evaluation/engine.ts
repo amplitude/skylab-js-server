@@ -274,6 +274,7 @@ const getUniqueIdFromUser = (user: SkylabUser): string => {
 // export non-'evaluate' functions for testing
 export {
   evaluate,
+  evaluateFlag,
   userMatchesSegmentConditions,
   getVariantBasedOnRollout,
   getHash,

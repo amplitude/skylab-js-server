@@ -1,5 +1,5 @@
 import { SkylabConfig, Defaults } from './config';
-import { evaluate } from './evaluation/engine';
+import { evaluateFlag } from './evaluation/engine';
 import { FlagConfig } from './flagConfig';
 import { InMemoryStorage } from './storage/memory';
 import { FetchHttpClient } from './transport/http';
@@ -54,11 +54,10 @@ export class SkylabClient {
 
   public async getVariant(flagKey: string, user: SkylabUser): Promise<string> {
     const flagConfigs = await this.getRules();
-    const flagVariants = evaluate(flagConfigs, user);
 
-    // TODO: put this into storage and then return
-
-    return flagVariants[flagKey];
+    const flagConfig = flagConfigs[flagKey];
+    const flagVariant = evaluateFlag(flagConfig, user);
+    return flagVariant;
   }
 
   public async getAllVariants(
