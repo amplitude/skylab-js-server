@@ -39,19 +39,17 @@ export class SkylabClient {
         'GET',
         { Authorization: `Api-Key ${this.apiKey}` },
       );
-      const json = JSON.parse(response.body);
-      // TODO: Get Flag Configs from this Json Response Body and return them
-
+      const flagConfigs = JSON.parse(response.body);
       const end = performance.now();
       if (this.debug) {
         console.debug(
           `[Skylab] Fetched all rules in ${(end - start).toFixed(3)} ms`,
         );
       }
+      return flagConfigs;
     } catch (e) {
       console.error(e);
     }
-    return [null];
   }
 
   public async getVariant(flagKey: string, user: SkylabUser): Promise<string> {

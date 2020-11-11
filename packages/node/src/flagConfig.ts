@@ -1,7 +1,6 @@
 export type SegmentCondition = {
   prop: string;
   op: string;
-  type: string;
   values: string[];
 };
 

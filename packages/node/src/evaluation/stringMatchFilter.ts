@@ -13,9 +13,9 @@ export class StringMatchFilter {
 
   public matches(value: string): boolean {
     switch (this.operator) {
-      case 'is':
+      case 'IS':
         return this.matchesIs(value);
-      case 'is_not':
+      case 'IS_NOT':
         return !this.matchesIs(value);
       default:
         // TODO: not supported

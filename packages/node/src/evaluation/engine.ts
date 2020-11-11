@@ -11,7 +11,7 @@ const MAX_VARIANT_HASH_VALUE = Math.floor(MAX_HASH_VALUE / 100);
 const DEFAULT_BUCKETING_KEY = 'id';
 
 const evaluate = (
-  flagConfigs: [FlagConfig],
+  flagConfigs: FlagConfig[],
   user: SkylabUser,
 ): Record<string, string> => {
   const result = {};
@@ -26,13 +26,9 @@ const evaluateFlag = (flagConfig: FlagConfig, user: SkylabUser): string => {
     return flagConfig.defaultValue;
   }
 
-  // TODO: flag fully rolled out; don't return default
-
   if (user == null) {
     return flagConfig.defaultValue;
   }
-
-  // TODO: Does not support exclusions
 
   // check for inclusions
   const uniqueIdForUser = getUniqueIdFromUser(user);
@@ -60,13 +56,13 @@ const evaluateFlag = (flagConfig: FlagConfig, user: SkylabUser): string => {
       }
 
       const variantKey = getVariantBasedOnRollout(
-        user,
         flagConfig.variantKeys,
         segmentTargetingConfig.bucketingKey,
         flagConfig.bucketingSalt,
         segmentTargetingConfig.percentage,
         segmentTargetingConfig.rolloutWeights,
         flagConfig.defaultValue,
+        user,
       );
 
       return variantKey;
@@ -74,24 +70,28 @@ const evaluateFlag = (flagConfig: FlagConfig, user: SkylabUser): string => {
   }
 
   return getVariantBasedOnRollout(
-    user,
     flagConfig.variantKeys,
     flagConfig.allUsersTargetingConfig.bucketingKey,
     flagConfig.bucketingSalt,
     flagConfig.allUsersTargetingConfig.percentage,
     flagConfig.allUsersTargetingConfig.rolloutWeights,
     flagConfig.defaultValue,
+    user,
   );
 };
 
+const getHash = (key: string): number => {
+  return MurmurHash3.x86.hash32(getUtf8Bytes(key));
+};
+
 const getVariantBasedOnRollout = (
-  user: SkylabUser,
   variantKeys: string[],
   bucketingKey: string,
   bucketingSalt: string,
   percentage: number,
   rolloutWeights: RolloutWeight,
   defaultValue: string,
+  user: SkylabUser,
 ): string => {
   if (bucketingKey == null) {
     bucketingKey = DEFAULT_BUCKETING_KEY;
@@ -103,8 +103,8 @@ const getVariantBasedOnRollout = (
     return defaultValue;
   }
 
-  const bucketingValue = `${bucketingSalt}/${bucketingKeyForUser} || ''}`;
-  const hash = MurmurHash3.x86.hash32(getUtf8Bytes(bucketingValue));
+  const bucketingValue = `${bucketingSalt}/${bucketingKeyForUser || ''}`;
+  const hash = getHash(bucketingValue);
   const bucket = hash % 100;
   const variantHash = Math.floor(hash / 100);
   const distribution = getVariantDistributionForSegment(
@@ -120,7 +120,7 @@ const getVariantBasedOnRollout = (
       if (slice.pct) {
         upperBound = slice.cumulativePct * MAX_VARIANT_HASH_VALUE;
         if (variantHash < upperBound) {
-          return slice.variantKey;
+          return slice.key;
         }
       }
     }
@@ -271,4 +271,10 @@ const getUniqueIdFromUser = (user: SkylabUser): string => {
   }
 };
 
-export { evaluate };
+// export non-'evaluate' functions for testing
+export {
+  evaluate,
+  userMatchesSegmentConditions,
+  getVariantBasedOnRollout,
+  getHash,
+};
