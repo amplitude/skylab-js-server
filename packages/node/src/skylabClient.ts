@@ -28,9 +28,10 @@ export class SkylabClient {
     this.debug = config?.debug;
   }
 
-  private async getRules(): Promise<[FlagConfig]> {
+  // should be called at initialization and periodically in the background
+  private async getRules(): Promise<{ [flagKey: string]: FlagConfig }> {
     if (!this.apiKey) {
-      return [null];
+      return {};
     }
     try {
       const start = performance.now();
@@ -40,27 +41,30 @@ export class SkylabClient {
         { Authorization: `Api-Key ${this.apiKey}` },
       );
       const flagConfigs = JSON.parse(response.body);
+      const flagConfigsMap = {};
+      for (const flagConfig of flagConfigs) {
+        flagConfigsMap[flagConfig.flagKey] = flagConfig;
+      }
+      // TODO: cache this flagConfigsMap on the server and refresh it periodically
+
       const end = performance.now();
       if (this.debug) {
         console.debug(
           `[Skylab] Fetched all rules in ${(end - start).toFixed(3)} ms`,
         );
       }
-      return flagConfigs;
+      return flagConfigsMap;
     } catch (e) {
       console.error(e);
     }
   }
 
   public async getVariant(flagKey: string, user: SkylabUser): Promise<string> {
-    const flagConfigs = await this.getRules();
-
-    const flagConfigsMap = {};
-    for (const flagConfig of flagConfigs) {
-      flagConfigsMap[flagConfig.flagKey] = flagConfig;
-    }
-    // TODO: cache this flagConfigsMap on the server
+    const flagConfigsMap = await this.getRules();
     const flagConfig = flagConfigsMap[flagKey];
+    if (!flagConfig) {
+      return null;
+    }
     const flagVariant = evaluateFlag(flagConfig, user);
     return flagVariant;
   }
