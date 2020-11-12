@@ -55,7 +55,12 @@ export class SkylabClient {
   public async getVariant(flagKey: string, user: SkylabUser): Promise<string> {
     const flagConfigs = await this.getRules();
 
-    const flagConfig = flagConfigs[flagKey];
+    const flagConfigsMap = {};
+    for (const flagConfig of flagConfigs) {
+      flagConfigsMap[flagConfig.flagKey] = flagConfig;
+    }
+    // TODO: cache this flagConfigsMap on the server
+    const flagConfig = flagConfigsMap[flagKey];
     const flagVariant = evaluateFlag(flagConfig, user);
     return flagVariant;
   }
