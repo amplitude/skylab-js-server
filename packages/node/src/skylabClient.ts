@@ -84,18 +84,22 @@ export class SkylabClient {
         'GET',
         { Authorization: `Api-Key ${this.apiKey}` },
       );
-      const json = JSON.parse(response.body);
-      this.storage.clear();
-      for (const flag of Object.keys(json)) {
-        this.storage.put(flag, response[flag]);
+      if (response.status === 200) {
+        const json = JSON.parse(response.body);
+        this.storage.clear();
+        for (const flag of Object.keys(json)) {
+          this.storage.put(flag, response[flag]);
+        }
+        const end = performance.now();
+        if (this.debug) {
+          console.debug(
+            `[Skylab] Fetched all variants in ${(end - start).toFixed(3)} ms`,
+          );
+        }
+        return json;
+      } else {
+        console.error(`[Skylab] Received ${response.status}: ${response.body}`);
       }
-      const end = performance.now();
-      if (this.debug) {
-        console.debug(
-          `[Skylab] Fetched all variants in ${(end - start).toFixed(3)} ms`,
-        );
-      }
-      return json;
     } catch (e) {
       console.error(e);
     }
