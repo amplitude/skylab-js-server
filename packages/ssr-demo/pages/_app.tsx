@@ -1,4 +1,4 @@
-import { SkylabClient } from '@amplitude-private/skylab-js-client';
+import { SkylabClient } from '@amplitude/skylab-js-client';
 import { AppProps } from 'next/app';
 import { ReactNode } from 'react';
 
