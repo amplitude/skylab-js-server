@@ -42,7 +42,7 @@ MyApp.getInitialProps = async ({ ctx }) => {
   if (ctx.req) {
     // called on server
     console.debug('Fetching Skylab variants');
-    const allFeatures = await SkylabServer.getInstance().getAllVariants({
+    const allFeatures = await SkylabServer.getInstance().getAllVariantsData({
       id: 'userId',
     });
     return { features: allFeatures };

@@ -9,7 +9,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "@amplitude/skylab-js-client": "^0.1.18",
+    "@amplitude/skylab-js-client": "^0.1.23",
     "@amplitude/skylab-js-server": "^0.1.6",
     "next": "9.5.5",
     "next-transpile-modules": "^4.1.0",

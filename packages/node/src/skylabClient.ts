@@ -1,13 +1,13 @@
 import { SkylabConfig, Defaults } from './config';
 import { evaluateFlag } from './evaluation/engine';
 import { FlagConfig } from './flagConfig';
-import { InMemoryStorage } from './storage/memory';
 import { FetchHttpClient } from './transport/http';
 import { Storage } from './types/storage';
 import { HttpClient } from './types/transport';
 import { SkylabUser } from './user';
 import { urlSafeBase64Encode } from './util/encode';
 import { performance } from './util/performance';
+import { Variant } from './variant';
 
 export class SkylabClient {
   protected readonly apiKey: string;
@@ -24,7 +24,6 @@ export class SkylabClient {
     this.config = config;
     this.serverUrl = config?.serverUrl || Defaults.SERVER_URL;
     this.httpClient = FetchHttpClient;
-    this.storage = new InMemoryStorage();
     this.debug = config?.debug;
   }
 
@@ -86,14 +85,45 @@ export class SkylabClient {
       );
       if (response.status === 200) {
         const json = JSON.parse(response.body);
-        this.storage.clear();
-        for (const flag of Object.keys(json)) {
-          this.storage.put(flag, response[flag]);
-        }
         const end = performance.now();
         if (this.debug) {
           console.debug(
             `[Skylab] Fetched all variants in ${(end - start).toFixed(3)} ms`,
+          );
+        }
+        return json;
+      } else {
+        console.error(`[Skylab] Received ${response.status}: ${response.body}`);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    return {};
+  }
+
+  public async getAllVariantsData(
+    user: SkylabUser,
+  ): Promise<{ [flagKey: string]: Variant }> {
+    if (!this.apiKey) {
+      return {};
+    }
+    try {
+      const start = performance.now();
+      const userContext = user || {};
+      const encodedContext = urlSafeBase64Encode(JSON.stringify(userContext));
+      const response = await this.httpClient.request(
+        `${this.serverUrl}/sdk/vardata/${encodedContext}`,
+        'GET',
+        { Authorization: `Api-Key ${this.apiKey}` },
+      );
+      if (response.status === 200) {
+        const json = JSON.parse(response.body);
+        const end = performance.now();
+        if (this.debug) {
+          console.debug(
+            `[Skylab] Fetched all variant data in ${(end - start).toFixed(
+              3,
+            )} ms`,
           );
         }
         return json;

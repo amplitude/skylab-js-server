@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@amplitude/skylab-js-client@^0.1.18":
-  version "0.1.21"
-  resolved "https://registry.yarnpkg.com/@amplitude/skylab-js-client/-/skylab-js-client-0.1.21.tgz#3a6983f5b583852d6cfb6e4694946d689a9d985e"
-  integrity sha512-Mn3lgSM5k8ek9ggC36NVCGMmi1OaQpRgVMX2hrUY9WT0i/WZzaODS6dEJ2XvHvgBrozT6AkwZY48SmotoX8BKg==
+"@amplitude/skylab-js-client@^0.1.23":
+  version "0.1.23"
+  resolved "https://registry.yarnpkg.com/@amplitude/skylab-js-client/-/skylab-js-client-0.1.23.tgz#9bb4fd1ceef0c44d78ff03d300593413a2a1a6a1"
+  integrity sha512-deZQ0zSmHakXwEUTWfDQYzQT/qK91fW6M+3OWEds99nyJb1T6uFcv/oTOw4knjRz+PW7SDTTyGonh14TRb45Zg==
   dependencies:
     base64-js "^1.3.1"
     unfetch "^4.1.0"

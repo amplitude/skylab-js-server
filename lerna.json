@@ -2,10 +2,5 @@
   "version": "0.1.6",
   "packages": "packages/*",
   "npmClient": "yarn",
-  "useWorkspaces": true,
-  "command": {
-    "publish": {
-      "registry": "https://amplitude.jfrog.io/artifactory/api/npm/npm/"
-    }
-  }
+  "useWorkspaces": true
 }
