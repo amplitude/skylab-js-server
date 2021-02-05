@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/amplitude/skylab-js-server/issues"
   },
-  "homepage": "https://github.com/amplitude/skylab-js-server#readme"
+  "homepage": "https://github.com/amplitude/skylab-js-server#readme",
+  "dependencies": {
+    "murmurhash3js-revisited": "^3.0.0"
+  }
 }

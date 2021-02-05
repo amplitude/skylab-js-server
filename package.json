@@ -23,9 +23,6 @@
     "typescript": "^4.0.3",
     "ts-jest": "^26.4.2"
   },
-  "dependencies": {
-    "murmurhash3js-revisited": "^3.0.0"
-  },
   "scripts": {
     "test": "jest"
   }
