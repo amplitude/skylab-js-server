@@ -1,6 +1,6 @@
 {
   "name": "ssr-demo",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "license": "MIT",
   "private": true,
   "scripts": {
@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@amplitude/skylab-js-client": "^0.1.23",
-    "@amplitude/skylab-js-server": "^0.1.9",
+    "@amplitude/skylab-js-server": "^0.1.10",
     "next": "9.5.5",
     "next-transpile-modules": "^4.1.0",
     "react": "16.13.1",

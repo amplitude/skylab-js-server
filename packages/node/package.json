@@ -1,6 +1,6 @@
 {
   "name": "@amplitude/skylab-js-server",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "Javascript Server SDK for Amplitude Skylab",
   "main": "dist/skylab.js",
   "files": [
