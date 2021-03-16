@@ -1,4 +1,4 @@
 export interface Variant {
-  value: string;
-  payload: any;
+  key: string;
+  payload?: any;
 }

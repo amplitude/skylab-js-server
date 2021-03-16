@@ -4,9 +4,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+    "start": "yarn --cwd ../node build && yarn next dev"
   },
   "dependencies": {
     "@amplitude/skylab-js-client": "^0.1.23",
