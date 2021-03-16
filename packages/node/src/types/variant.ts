@@ -11,8 +11,11 @@ export type Variant = {
    * The attached payload, if any
    */
   payload?: any;
-}
+};
 
+/**
+ * @category Types
+ */
 export type Variants = {
-  [flagKey: string]: Variant
-}
+  [flagKey: string]: Variant;
+};

@@ -28,10 +28,9 @@ export class SkylabClient {
    */
   public constructor(apiKey: string, config: SkylabConfig) {
     this.apiKey = apiKey;
-    this.config = config;
-    this.serverUrl = config?.serverUrl || Defaults.SERVER_URL;
+    this.config = { ...Defaults, ...config };
     this.httpClient = FetchHttpClient;
-    this.debug = config?.debug;
+    this.debug = this.config?.debug;
   }
 
   private async fetchAll(
@@ -41,7 +40,7 @@ export class SkylabClient {
       const start = performance.now();
       const userContext = user || {};
       const encodedContext = urlSafeBase64Encode(JSON.stringify(userContext));
-      const endpoint = `${this.serverUrl}/sdk/vardata/${encodedContext}`;
+      const endpoint = `${this.config.serverUrl}/sdk/vardata/${encodedContext}`;
       const headers = {
         Authorization: `Api-Key ${this.apiKey}`,
       };
@@ -67,9 +66,7 @@ export class SkylabClient {
    * Returns all variants for the user
    * @param user The {@link SkylabUser} context
    */
-  public async getVariants(
-    user: SkylabUser,
-  ): Promise<Variants> {
+  public async getVariants(user: SkylabUser): Promise<Variants> {
     if (!this.apiKey) {
       return {};
     }

@@ -2,7 +2,6 @@
  * @category Configuration
  */
 export type SkylabConfig = {
-
   /**
    * Set to true to log some extra information to the console.
    */
@@ -20,9 +19,19 @@ export type SkylabConfig = {
 };
 
 /**
+ Defaults for Skylab Config options
+
+ | **Option**       | **Default**                       |
+ |----------------|---------------------------------|
+ | **debug**        | false                           |
+ | **instanceName** | `"$default_instance"`             |
+ | **serverUrl**    | `"https://api.lab.amplitude.com"` |
+
+ *
  * @category Configuration
  */
-export const Defaults = {
-  INSTANCE_NAME: '$default_instance',
-  SERVER_URL: 'https://api.lab.amplitude.com',
+export const Defaults: SkylabConfig = {
+  debug: false,
+  instanceName: '$default_instance',
+  serverUrl: 'https://api.lab.amplitude.com',
 };
