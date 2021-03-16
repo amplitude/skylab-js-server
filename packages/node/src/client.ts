@@ -2,12 +2,13 @@ import { SkylabConfig, Defaults } from './config';
 import { FetchHttpClient } from './transport/http';
 import { HttpClient } from './types/transport';
 import { SkylabUser } from './types/user';
-import { Variant } from './types/variant';
+import { Variant, Variants } from './types/variant';
 import { urlSafeBase64Encode } from './util/encode';
 import { performance } from './util/performance';
 
 /**
  * Main client for fetching variant data.
+ * @category Core Usage
  */
 export class SkylabClient {
   protected readonly apiKey: string;
@@ -20,6 +21,8 @@ export class SkylabClient {
 
   /**
    * Creates a new SkylabClient instance.
+   * In most cases, a SkylabClient should be initialized and accessed using
+   * the factory functions {@link skylabInit} and {@link skylabInstance}
    * @param apiKey The environment API Key
    * @param config See {@link SkylabConfig} for config options
    */
@@ -62,10 +65,11 @@ export class SkylabClient {
 
   /**
    * Returns all variants for the user
+   * @param user The {@link SkylabUser} context
    */
   public async getVariants(
     user: SkylabUser,
-  ): Promise<{ [flagKey: string]: Variant }> {
+  ): Promise<Variants> {
     if (!this.apiKey) {
       return {};
     }
