@@ -1,10 +1,10 @@
 import { SkylabConfig, Defaults } from './config';
 import { FetchHttpClient } from './transport/http';
 import { HttpClient } from './types/transport';
-import { SkylabUser } from './user';
+import { SkylabUser } from './types/user';
 import { urlSafeBase64Encode } from './util/encode';
 import { performance } from './util/performance';
-import { Variant } from './variant';
+import { Variant } from './types/variant';
 
 /**
  * Main client for fetching variant data.

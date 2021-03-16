@@ -1,18 +1,3 @@
-export const SkylabUserFields = {
-  ID: 'id',
-  USER_ID: 'user_id',
-  DEVICE_ID: 'device_id',
-  COUNTRY: 'country',
-  REGION: 'region',
-  CITY: 'city',
-  LANGUAGE: 'language',
-  PLATFORM: 'platform',
-  VERSION: 'version',
-  DEVICE_FAMILY: 'device_family',
-  DEVICE_TYPE: 'device_type',
-  USER_PROPERTIES: 'user_properties',
-};
-
 export type SkylabUser = {
   id?: string;
   device_id?: string;
