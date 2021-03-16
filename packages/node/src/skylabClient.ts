@@ -2,9 +2,9 @@ import { SkylabConfig, Defaults } from './config';
 import { FetchHttpClient } from './transport/http';
 import { HttpClient } from './types/transport';
 import { SkylabUser } from './types/user';
+import { Variant } from './types/variant';
 import { urlSafeBase64Encode } from './util/encode';
 import { performance } from './util/performance';
-import { Variant } from './types/variant';
 
 /**
  * Main client for fetching variant data.
@@ -31,7 +31,9 @@ export class SkylabClient {
     this.debug = config?.debug;
   }
 
-  private async fetchAll(user: SkylabUser): Promise<{ [flagKey: string]: Variant}> {
+  private async fetchAll(
+    user: SkylabUser,
+  ): Promise<{ [flagKey: string]: Variant }> {
     try {
       const start = performance.now();
       const userContext = user || {};
@@ -39,16 +41,15 @@ export class SkylabClient {
       const endpoint = `${this.serverUrl}/sdk/vardata/${encodedContext}`;
       const headers = {
         Authorization: `Api-Key ${this.apiKey}`,
-      }
-      const response = await this.httpClient.request(
-        endpoint, 'GET', headers
-      );
+      };
+      const response = await this.httpClient.request(endpoint, 'GET', headers);
       if (response.status === 200) {
         const json = JSON.parse(response.body);
         const end = performance.now();
-        this.debug && console.debug(
-          `[Skylab] Fetched all variants in ${(end - start).toFixed(3)} ms`,
-        );
+        this.debug &&
+          console.debug(
+            `[Skylab] Fetched all variants in ${(end - start).toFixed(3)} ms`,
+          );
         return json;
       } else {
         console.error(`[Skylab] Received ${response.status}: ${response.body}`);
