@@ -4,8 +4,14 @@
 export type Variant = {
   /**
    * The value of the variant determined by the flag configuration
+   * @deprecated Use `value` instead
    */
   key: string;
+
+  /**
+   * The value of the variant determined by the flag configuration
+   */
+  value: string;
 
   /**
    * The attached payload, if any

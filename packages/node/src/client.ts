@@ -48,11 +48,27 @@ export class SkylabClient {
       if (response.status === 200) {
         const json = JSON.parse(response.body);
         const end = performance.now();
+        const variants: Variants = {};
+        for (const key of Object.keys(json)) {
+          let value;
+          if ('value' in json[key]) {
+            value = json[key].value;
+          } else if ('key' in json[key]) {
+            // value was previously under the "key" field
+            value = json[key].key;
+          }
+          const variant: Variant = {
+            key: value,
+            value,
+            payload: json[key].payload
+          };
+          variants[key] = variant
+        }
         this.debug &&
           console.debug(
             `[Skylab] Fetched all variants in ${(end - start).toFixed(3)} ms`,
           );
-        return json;
+        return variants;
       } else {
         console.error(`[Skylab] Received ${response.status}: ${response.body}`);
       }
