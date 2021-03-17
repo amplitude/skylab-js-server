@@ -5,6 +5,13 @@ import url from 'url';
 
 import { SimpleResponse, HttpClient } from '../types/transport';
 
+/**
+ * Wraps the http and https libraries in a fetch()-like interface
+ * @param requestUrl
+ * @param method HTTP Method (GET, POST, etc.)
+ * @param headers HTTP Headers
+ * @param data Request body
+ */
 const request: HttpClient['request'] = (
   requestUrl: string,
   method: string,
