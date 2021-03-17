@@ -34,6 +34,11 @@ export type SkylabUser = {
   /**
    * Predefined field, must be manually provided
    */
+  dma?: string;
+
+  /**
+   * Predefined field, must be manually provided
+   */
   language?: string;
 
   /**
@@ -55,6 +60,11 @@ export type SkylabUser = {
    * Predefined field, must be manually provided
    */
   device_type?: string;
+
+  /**
+   * Predefined field, must be manually provided
+   */
+  carrier?: string;
 
   /**
    * Custom user properties
