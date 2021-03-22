@@ -7,8 +7,7 @@ import styles from '../styles/Home.module.css';
 
 const Home = (): ReactNode => {
   const skylab = useContext(SkylabContext);
-  const showFeature = skylab.getVariant('js-ssr-demo');
-  const featureData = skylab.getVariantData('js-ssr-demo');
+  const feature = skylab.getVariant('js-ssr-demo');
   return (
     <div className={styles.container}>
       <Head>
@@ -24,11 +23,11 @@ const Home = (): ReactNode => {
         <p className={styles.description}>
           If you see an image below, the feature flag is enabled
         </p>
-        <p>{`js-ssr-demo: ${showFeature}`}</p>
-        <p>{`payload: ${JSON.stringify(featureData)}`}</p>
+        <p>{`js-ssr-demo: ${feature?.value}`}</p>
+        <p>{`payload: ${JSON.stringify(feature?.payload)}`}</p>
       </main>
 
-      {showFeature ? (
+      {feature?.value ? (
         <footer className={styles.footer}>
           <img
             src="/amplitude-logo.svg"
