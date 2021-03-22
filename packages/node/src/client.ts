@@ -60,7 +60,6 @@ export class SkylabClient {
             value = json[key].key;
           }
           const variant: Variant = {
-            key: value,
             value,
             payload: json[key].payload,
           };
