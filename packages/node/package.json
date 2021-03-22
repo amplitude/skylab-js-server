@@ -11,6 +11,7 @@
     "lint": "eslint . --ignore-path ../../.eslintignore",
     "test": "jest",
     "docs": "typedoc",
+    "version": "yarn docs && git add ../../docs",
     "prepublish": "yarn build"
   },
   "repository": {
