@@ -67,6 +67,11 @@ export type SkylabUser = {
   carrier?: string;
 
   /**
+   * Predefined field, auto populated, can be manually overridden
+   */
+  library?: string;
+
+  /**
    * Custom user properties
    */
   user_properties?: {

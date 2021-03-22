@@ -2,7 +2,7 @@
 const { pathsToModuleNameMapper } = require('ts-jest/utils');
 
 const package = require('./package');
-const { compilerOptions } = require('./tsconfig.test.json');
+const { compilerOptions } = require('./tsconfig.json');
 
 module.exports = {
   preset: 'ts-jest',
@@ -15,7 +15,7 @@ module.exports = {
   }),
   globals: {
     'ts-jest': {
-      tsconfig: '<rootDir>/tsconfig.test.json',
+      tsconfig: '<rootDir>/tsconfig.json',
     },
   },
 };

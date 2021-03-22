@@ -1,3 +1,5 @@
+import { version as PACKAGE_VERSION } from '../package.json';
+
 import { SkylabConfig, Defaults } from './config';
 import { FetchHttpClient } from './transport/http';
 import { HttpClient } from './types/transport';
@@ -38,7 +40,7 @@ export class SkylabClient {
   ): Promise<{ [flagKey: string]: Variant }> {
     try {
       const start = performance.now();
-      const userContext = user || {};
+      const userContext = this.addContext(user || {});
       const encodedContext = urlSafeBase64Encode(JSON.stringify(userContext));
       const endpoint = `${this.config.serverUrl}/sdk/vardata/${encodedContext}`;
       const headers = {
@@ -76,6 +78,13 @@ export class SkylabClient {
       console.error(e);
     }
     return {};
+  }
+
+  private addContext(user: SkylabUser): SkylabUser {
+    return {
+      library: `skylab-js-server/${PACKAGE_VERSION}`,
+      ...user,
+    };
   }
 
   /**
