@@ -49,6 +49,11 @@ export type SkylabUser = {
   /**
    * Predefined field, must be manually provided
    */
+  os?: string;
+
+  /**
+   * Predefined field, must be manually provided
+   */
   version?: string;
 
   /**
