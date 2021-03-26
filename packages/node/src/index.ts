@@ -5,6 +5,7 @@
  * @module skylab-js-server
  */
 
+export { AmplitudeCookie } from './amplitude';
 export { SkylabClient } from './client';
 export { SkylabConfig, Defaults } from './config';
 export { Skylab } from './factory';

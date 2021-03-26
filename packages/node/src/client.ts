@@ -5,7 +5,7 @@ import { FetchHttpClient } from './transport/http';
 import { HttpClient } from './types/transport';
 import { SkylabUser } from './types/user';
 import { Variant, Variants } from './types/variant';
-import { urlSafeBase64Encode } from './util/encode';
+import { base64Decode, urlSafeBase64Encode } from './util/encode';
 import { performance } from './util/performance';
 
 /**

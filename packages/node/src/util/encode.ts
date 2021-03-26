@@ -24,3 +24,7 @@ export const urlSafeBase64Encode = (s: string): string => {
 
   return encoded.replace('+', '-').replace('/', '_').replace(/[=]+$/, '');
 };
+
+export const base64Decode = (encoded: string): string => {
+  return Buffer.from(encoded, 'base64').toString('utf-8');
+};
