@@ -4,11 +4,12 @@
   "description": "Javascript Server SDK for Amplitude Skylab",
   "main": "dist/src/index.js",
   "files": [
-    "dist",
-    "dist/src"
+    "dist"
   ],
   "scripts": {
-    "build": "rm -rf dist && tsc --project ./tsconfig.build.json --noEmit false",
+    "build": "yarn generate:version && rm -rf dist && tsc --project ./tsconfig.build.json --noEmit false",
+    "generate:version": "genversion --es6 gen/version.ts",
+    "prepare": "yarn generate:version",
     "lint": "eslint . --ignore-path ../../.eslintignore",
     "test": "jest",
     "docs": "typedoc",

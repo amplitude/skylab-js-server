@@ -1,11 +1,11 @@
-import { version as PACKAGE_VERSION } from '../package.json';
+import { version as PACKAGE_VERSION } from 'gen/version.js';
 
 import { SkylabConfig, Defaults } from './config';
 import { FetchHttpClient } from './transport/http';
 import { HttpClient } from './types/transport';
 import { SkylabUser } from './types/user';
 import { Variant, Variants } from './types/variant';
-import { base64Decode, urlSafeBase64Encode } from './util/encode';
+import { urlSafeBase64Encode } from './util/encode';
 import { performance } from './util/performance';
 
 /**

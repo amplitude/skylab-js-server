@@ -7,10 +7,12 @@
     "rootDir": ".",
     "baseUrl": ".",
     "paths": {
-      "src/*": ["./src/*"]
+      "src/*": ["./src/*"],
+      "test/*": ["./test/*"],
+      "gen/*": ["./gen/*"],
     }
   },
-  "include": ["src/**/*.ts", "test/**/*.ts"],
+  "include": ["src/**/*.ts", "test/**/*.ts", "gen/**/*.js"],
   "exclude": ["dist"],
   "typedocOptions": {
     "name": "Skylab JS Server Documentation",
