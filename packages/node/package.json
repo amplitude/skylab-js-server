@@ -4,7 +4,8 @@
   "description": "Javascript Server SDK for Amplitude Skylab",
   "main": "dist/src/index.js",
   "files": [
-    "dist"
+    "dist",
+    "dist/src"
   ],
   "scripts": {
     "build": "rm -rf dist && tsc --project ./tsconfig.build.json --noEmit false",
