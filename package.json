@@ -2,6 +2,10 @@
   "name": "skylab-js-server-root",
   "version": "0.1.0",
   "license": "MIT",
+  "scripts": {
+    "lint": "lerna run lint",
+    "test": "jest"
+  },
   "private": true,
   "workspaces": [
     "packages/*"
@@ -24,9 +28,6 @@
     "ts-jest": "^26.4.2",
     "typedoc": "^0.20.32",
     "typescript": "^4.0.3"
-  },
-  "scripts": {
-    "test": "jest"
   },
   "dependencies": {}
 }
