@@ -1,4 +1,4 @@
-import { version as PACKAGE_VERSION } from 'gen/version.js';
+import { version as PACKAGE_VERSION } from '../gen/version';
 
 import { SkylabConfig, Defaults } from './config';
 import { FetchHttpClient } from './transport/http';
