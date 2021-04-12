@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "lint": "lerna run lint",
-    "test": "jest"
+    "test": "jest",
+    "start": "yarn --cwd packages/ssr-demo start"
   },
   "private": true,
   "workspaces": [
