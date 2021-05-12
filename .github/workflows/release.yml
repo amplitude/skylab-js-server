@@ -40,18 +40,14 @@ jobs:
         with:
           node-version: '10'
 
-      - name: Install Dependencies
-        run: yarn install --frozen-lockfile
+    - name: Install
+      run: yarn install --frozen-lockfile
 
-      # Also generates version
-      - name: Build
-        run: |
-          cd packages/node
-          yarn
-          cd ../..
+    - name: Build
+      run: npx lerna exec yarn
 
-      - name: Run Tests
-        run: yarn test
+    - name: Test
+      run: yarn test
 
       - name: Configure Git User
         run: |
