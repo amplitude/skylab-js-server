@@ -15,12 +15,8 @@
   "exclude": ["dist"],
   "typedocOptions": {
     "name": "Skylab JS Server Documentation",
-    "entryPoints": [
-      "./src/index.ts"
-    ],
-    "categoryOrder": [
-      "Core Usage", "Configuration", "Types"
-    ],
+    "entryPoints": ["./src/index.ts"],
+    "categoryOrder": ["Core Usage", "Configuration", "Types"],
     "categorizeByGroup": false,
     "disableSources": true,
     "excludePrivate": true,

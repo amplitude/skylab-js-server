@@ -10,7 +10,7 @@
     "build": "yarn generate:version && rm -rf dist && tsc --project ./tsconfig.build.json --noEmit false",
     "generate:version": "genversion --es6 gen/version.ts",
     "prepare": "yarn generate:version",
-    "lint": "eslint . --ignore-path ../../.eslintignore",
+    "lint": "eslint . --ignore-path ../../.eslintignore && prettier -c . --ignore-path ../../.prettierignore",
     "test": "jest",
     "docs": "typedoc",
     "version": "yarn docs && git add ../../docs",
