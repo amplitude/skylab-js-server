@@ -59,10 +59,10 @@ export type SkylabConfig = {
  | **instanceName** | `"$default_instance"`             |
  | **serverUrl**    | `"https://api.lab.amplitude.com"` |
  | **fetchTimeoutMillis**    | `10000` |
- | **fetchRetries**    | `5` |
+ | **fetchRetries**    | `8` |
  | **fetchRetryBackoffMinMillis**    | `500` |
  | **fetchRetryBackoffMaxMillis**    | `10000` |
- | **fetchRetryBackoffScalar**    | `2` |
+ | **fetchRetryBackoffScalar**    | `1.5` |
  | **fetchRetryTimeoutMillis**    | `10000` |
 
 
