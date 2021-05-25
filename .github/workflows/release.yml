@@ -72,7 +72,8 @@ jobs:
 
       - name: Setup NPM Token
         if: ${{ github.event.inputs.dryRun == 'false'}}
-        run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc
+        run: |
+          echo //registry.npmjs.org/:_authToken=\$\{NPM_TOKEN\} > .npmrc
 
       - name: Release
         if: ${{ github.event.inputs.dryRun == 'false'}}
